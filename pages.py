@@ -2,97 +2,95 @@ import streamlit as st
 from example_functions.domain_adaptation_streamlit_example import domain_adaptation_example
 from example_functions.video_loading_streamlit_example import demo_1, demo_2, demo_3, demo_4
 from streamlit_card import card
+from navigation import go_to
 
 
 examples = [
     {
         "name": "Video Loading Example",
         "description": "Some Description",
-        "image": "http://placekitten.com/500/500",
+        "image": "",
         "nav": "video_example"
     },
     
     {
         "name": "Domain Adaptation Example",
         "description": "Some Description",
-        "image": "http://placekitten.com/500/500",
+        "image": "",
         "nav": "domain_adaptation"
     },
 
     {
         "name": "Third Example",
         "description": "Some Description",
-        "image": "http://placekitten.com/500/500",
+        "image": "",
         "nav": "domain_adaptation"
     },
 
     {
         "name": "Fourth Example",
         "description": "Some Description",
-        "image": "http://placekitten.com/500/500",
+        "image": "",
         "nav": "domain_adaptation"
     },
 
     {
         "name": "Fifth Example",
         "description": "Some Description",
-        "image": "http://placekitten.com/500/500",
+        "image": "",
         "nav": "domain_adaptation"
     },
 
     {
         "name": "Sixth Example",
         "description": "Some Description",
-        "image": "http://placekitten.com/500/500",
+        "image": "",
         "nav": "domain_adaptation"
     }
 ]
 
-def go_to(page):
-    st.session_state["page"] = page
-
 
 def home_page():
-    # Title
+    st.markdown("<h1 style='text-align: center;'>Welcome To PyKale 👋</h1>", unsafe_allow_html=True)
+    st.markdown("<h5 style='text-align: center;'>A library built upon PyTorch for multimodal learning and transfer learning from multiple data sources</h5>", unsafe_allow_html=True)
+
+
+
+
+def archive_page():
     st.markdown("<h1 style='text-align: center;'>Welcome To The Pykale Example Archive 👋</h1>", unsafe_allow_html=True)
-    st.markdown("<h5 style='text-align: center;'>Here we explore some examples created in pykale</h5>", unsafe_allow_html=True)
+    st.markdown("<h5 style='text-align: center;'>Here we explore some examples created in Pykale</h5>", unsafe_allow_html=True)
 
-    # Grid Layout For Examples
-    for row in range(0, len(examples), 3):
-        cols = st.columns(3)
 
-        for i in range(3):
-            if row + i < len(examples):
-                example = examples[row+i]
+    # Ensuring a proper grid layout
+    num_cols = 3  # Cards per row
+    cols = st.columns(num_cols)
 
-                with cols[i]:
-                    card(
-                        title=example["name"],
-                        text=example["description"],
-                        image=example["image"],
-                        styles = {
-                            "card": {
-                                "width": "100%"
-                            }
-                        },
-                        on_click=lambda nav=example["nav"]: go_to(nav)
-                    )
+    for i, example in enumerate(examples):
+        with cols[i % num_cols]:
+            card(
+                title=example["name"],
+                text=example["description"],
+                image=example["image"],
+                styles={
+                    "card": {
+                        "width": "100%",
+                        "padding": "15px",
+                        "border-radius": "10px",
+                        "box-shadow": "0px 4px 8px rgba(0,0,0,0.2)",
+                    }
+                },
+                on_click=lambda nav=example["nav"]: go_to(nav),
+                key=f"card_{i}" 
+            )
 
 
 def video_demo_page():
-    # Title
-    st.button("Back to Home", on_click=go_to, args=("home",))
-    st.markdown("<h1 style='text-align: center;'>Video Loading Example</h1>", unsafe_allow_html=True)
+    st.title("Video Loading Example")
 
 
-    # Demo button
-    demo = st.radio(
-        "Select Demo To Try Out",
-        ["Demo 1",  "Demo 2", "Demo 3", "Demo 4"],
-        index=None
-    )
+    demo = st.radio("Select Demo To Try Out", ["Demo 1", "Demo 2", "Demo 3", "Demo 4"], index=None)
     
-    # state management
     if demo == "Demo 1":
         demo_1()
     elif demo == "Demo 2":
@@ -102,7 +100,7 @@ def video_demo_page():
     elif demo == "Demo 4":
         demo_4()
 
+
 def domain_adaptation_page():
-    st.button("Back to Home", on_click=go_to, args=("home",))
-    st.markdown("<h1 style='text-align: center;'>Domain Adaptation Example</h1>", unsafe_allow_html=True)
+    st.title("Domain Adaptation Example")
     domain_adaptation_example()

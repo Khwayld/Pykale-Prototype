@@ -1,19 +1,23 @@
 import streamlit as st
-from pages import home_page, video_demo_page, domain_adaptation_page
-from example_functions.video_loading_streamlit_example import demo_1
-
+from navigation import navbar
+from pages import home_page, archive_page, video_demo_page, domain_adaptation_page
 
 
 
 
 def main():    
-    # init
+    st.set_page_config(layout="wide")  
+
     if "page" not in st.session_state:
         st.session_state["page"] = "home"
 
-    # state management
+    navbar()
+
+    # Page routing
     if st.session_state["page"] == "home":
         home_page()
+    elif st.session_state["page"] == "archive":
+        archive_page()
     elif st.session_state["page"] == "video_example":
         video_demo_page()
     elif st.session_state["page"] == "domain_adaptation":
