@@ -86,11 +86,41 @@ def archive_page():
 
 
 def video_demo_page():
-    st.title("Video Loading Example")
+    st.markdown(
+        "<h1 style='text-align: center;'>📽️ Video Loading Example</h1>", 
+        unsafe_allow_html=True
+    )
 
+    st.markdown(
+        """
+        <div style="text-align: center; font-size: 18px;">
+        Explore different approaches to loading videos in PyKale. 
+        Select one of the demos below to see how frames are sampled, transformed, and displayed.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-    demo = st.radio("Select Demo To Try Out", ["Demo 1", "Demo 2", "Demo 3", "Demo 4"], index=None)
+    st.write("---")
+
+    st.markdown("<h3 style='text-align:center; margin-bottom: -10px;'>Choose a Demo</h3>", unsafe_allow_html=True)
+
+    col1, col2, col3 = st.columns([1.66,1,1])
+    with col2:
+        demo = st.radio(
+            "",
+            ["Demo 1", "Demo 2", "Demo 3", "Demo 4"],
+            label_visibility="collapsed",  
+            index=None,
+            horizontal=False
+        )
     
+    st.write("---")
+
+
+
+
+
     if demo == "Demo 1":
         demo_1()
     elif demo == "Demo 2":

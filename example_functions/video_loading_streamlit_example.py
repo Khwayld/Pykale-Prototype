@@ -22,8 +22,38 @@ def denormalize(video_tensor):
     )
     return (inverse_normalize(video_tensor) * 255.0).type(torch.uint8).permute(0, 2, 3, 1).numpy()
 
+def display_frames_in_grid(frames, num_cols=3):
+    """
+    Helper function to display a list of frames (PIL images or arrays) in a grid layout.
+    Each row has `num_cols` columns.
+    """
+    rows_needed = (len(frames) + num_cols - 1) // num_cols
+    for row_idx in range(rows_needed):
+        cols = st.columns(num_cols)
+        for col_idx in range(num_cols):
+            frame_index = row_idx * num_cols + col_idx
+            if frame_index < len(frames):
+                with cols[col_idx]:
+                    st.markdown(
+                        f"<h5 style='text-align: center;'>Frame {frame_index + 1}</h5>",
+                        unsafe_allow_html=True
+                    )
+                    st.image(frames[frame_index], use_column_width=True)
+
+
 
 def demo_1():
+    st.markdown("<h3 style='text-align: center;'>Demo 1: Basic Sampling</h3>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <p style="text-align:center;">
+        Load <strong>5 sparse segments</strong> (1 frame each) 
+        from the <em>first</em> video sample in the dataset.
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
     videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
@@ -42,14 +72,25 @@ def demo_1():
     frames = sample[0]  
 
 
-    # Plot Images
-    for index in range(len(frames)):
-        st.title(index)
-        st.image(frames[index])
+    st.markdown("<h4 style='text-align:center;'>Extracted Video Frames</h4>", unsafe_allow_html=True)
 
+    # Display frames in a grid
+    display_frames_in_grid(frames, num_cols=3)
 
 
 def demo_2():
+    st.markdown("<h3 style='text-align: center;'>Demo 2: Continuous Frame Clip</h3>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <p style="text-align:center;">
+        Load <strong>9 consecutive frames</strong> from a single segment in the 
+        <em>second</em> video sample. This illustrates continuous clip loading 
+        instead of sparse sampling.
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
     videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
@@ -67,15 +108,27 @@ def demo_2():
     sample = dataset[1]
     frames = sample[0]  # list of PIL images
 
-    # Plot Images
-    for index in range(len(frames)):
-        st.title(index)
-        st.image(frames[index])
+    st.markdown("<h4 style='text-align:center;'>Extracted Video Frames</h4>", unsafe_allow_html=True)
+
+    # Display frames in a grid
+    display_frames_in_grid(frames, num_cols=3)
 
 
 
 
 def demo_3():
+    st.markdown("<h3 style='text-align: center;'>Demo 3: Transform & Tensor</h3>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <p style="text-align:center;">
+        Apply PyTorch transforms (<code>Resize</code>, <code>CenterCrop</code>, <code>Normalize</code>) 
+        to <strong>5 sampled frames</strong> and display them. 
+        Also shows a brief example of <code>DataLoader</code> usage.
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
     videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
@@ -100,36 +153,56 @@ def demo_3():
     )
 
     sample = dataset[1]
-    frames = sample[0]  
     frame_tensor = sample[0]  
 
-    st.subheader(f"Video Tensor Size: {str(frame_tensor.size())}")
+    # Show shape
+    st.markdown(
+        f"<h4 style='text-align:center;'>Video Tensor Size: {tuple(frame_tensor.size())}</h4>",
+        unsafe_allow_html=True
+    )
 
     # Plot Images
     frame_tensor = denormalize(frame_tensor)
 
-    for index in range(len(frame_tensor)):
-        st.title(index)
-        st.image(frame_tensor[index])
+    # Display frames in a grid
+    st.markdown("<h4 style='text-align:center;'>Transformed & Denormalized Frames</h4>", unsafe_allow_html=True)
+    display_frames_in_grid(frame_tensor, num_cols=3)
 
 
     dataloader = torch.utils.data.DataLoader(
         dataset=dataset, batch_size=2, shuffle=True, num_workers=4, pin_memory=True
     )
 
-    for epoch in range(10):
-        for video_batch, labels in dataloader:
-            """
-            Insert Training Code Here
-            """
+    st.write("---")
+    st.markdown("<h4 style='text-align:center;'>DataLoader Example (first batch)</h4>", unsafe_allow_html=True)
 
-            st.subheader(labels)
-            st.subheader(f"Video Batch Tensor Size: {str(video_batch.size())}")
-            st.subheader(f"Batch Labels Size: {str(labels.size())}")
-            break
+    for video_batch, labels in dataloader:
+        # Show the shape of the first batch
+        st.markdown(
+            f"""
+            <p style="text-align:center;">
+            <strong>Video Batch Tensor Size:</strong> {tuple(video_batch.size())} <br/>
+            <strong>Batch Labels Shape:</strong> {tuple(labels.size())} <br/>
+            Labels: {labels.tolist()}
+            </p>
+            """,
+            unsafe_allow_html=True
+        )
         break
 
 def demo_4():
+    st.markdown("<h3 style='text-align: center;'>Demo 4: Multi-Label Example</h3>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        <p style="text-align:center;">
+        Demonstration of a dataset with <strong>multiple labels per sample</strong> 
+        (e.g., <em>verb, noun, action</em>). We'll load the first batch from a 
+        DataLoader and show how the labels are structured.
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
     videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset_multilabel")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
@@ -157,19 +230,21 @@ def demo_4():
         dataset=dataset, batch_size=3, shuffle=True, num_workers=2, pin_memory=True
     )
 
-    st.title("\nMulti-Label Example")
-    for epoch in range(10):
-        for batch in dataloader:
-            """
-            Insert Training Code Here
-            """
-            video_batch, (labels1, labels2, labels3) = batch
+    st.markdown("<br/>", unsafe_allow_html=True)
 
-            st.subheader(f"Video Batch Tensor Size: {str(video_batch.size())}")
-            st.subheader(f"Labels1 Size: {str(labels1.size())}") 
-            st.subheader(f"Labels2 Size:{str(labels2.size())}")  
-            st.subheader(f"Labels3 Size: {str(labels3.size())}")  
-            break
+
+    for video_batch, (labels1, labels2, labels3) in dataloader:
+        st.markdown(
+            f"""
+            <div style="text-align:center;">
+              <p><strong>Video Batch Tensor Size:</strong> {tuple(video_batch.size())}</p>
+              <p><em>Labels1 Shape</em> (e.g., verb): {tuple(labels1.size())} — {labels1.tolist()}</p>
+              <p><em>Labels2 Shape</em> (e.g., noun): {tuple(labels2.size())} — {labels2.tolist()}</p>
+              <p><em>Labels3 Shape</em> (e.g., action): {tuple(labels3.size())} — {labels3.tolist()}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
         break
 
 
