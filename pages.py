@@ -1,4 +1,5 @@
 import streamlit as st
+from chatbot import display_chatbot
 from example_functions.domain_adaptation_streamlit_example import domain_adaptation_example
 from example_functions.video_loading_streamlit_example import demo_1, demo_2, demo_3, demo_4
 from streamlit_card import card
@@ -53,6 +54,9 @@ examples = [
 def home_page():
     st.markdown("<h1 style='text-align: center;'>Welcome To PyKale 👋</h1>", unsafe_allow_html=True)
     st.markdown("<h5 style='text-align: center;'>A library built upon PyTorch for multimodal learning and transfer learning from multiple data sources</h5>", unsafe_allow_html=True)
+    st.write("---")
+    st.subheader("Chat with Our PyKale Bot")
+    display_chatbot()
 
 
 
