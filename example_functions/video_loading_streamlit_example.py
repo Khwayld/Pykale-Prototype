@@ -24,7 +24,7 @@ def denormalize(video_tensor):
 
 
 def demo_1():
-    videos_root = os.path.join(os.getcwd(), "demo_dataset")
+    videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
     dataset = VideoFrameDataset(
@@ -50,7 +50,7 @@ def demo_1():
 
 
 def demo_2():
-    videos_root = os.path.join(os.getcwd(), "demo_dataset")
+    videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
     dataset = VideoFrameDataset(
@@ -76,7 +76,7 @@ def demo_2():
 
 
 def demo_3():
-    videos_root = os.path.join(os.getcwd(), "demo_dataset")
+    videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
     preprocess = transforms.Compose(
@@ -130,7 +130,7 @@ def demo_3():
         break
 
 def demo_4():
-    videos_root = os.path.join(os.getcwd(), "demo_dataset_multilabel")
+    videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset_multilabel")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
     preprocess = transforms.Compose(
