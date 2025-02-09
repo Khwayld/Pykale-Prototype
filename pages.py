@@ -86,16 +86,41 @@ def archive_page():
 
 
 def video_demo_page():
+    # Title
     st.markdown(
         "<h1 style='text-align: center;'>📽️ Video Loading Example</h1>", 
         unsafe_allow_html=True
     )
 
+    st.markdown("""
+    <p style="text-align:center; font-size:18px;">
+    Explore how PyKale loads and transforms video frames
+    </p>
+    """, unsafe_allow_html=True)
+
+    st.write("---")
+
+    # 1. Overview
+    st.markdown("<h3 style='text-align:center;'>1. Overview & Why It Matters</h3>", unsafe_allow_html=True)
+    
+    st.markdown("""
+    <p style="text-align:center; font-size:16px;">
+    This demo shows how short video clips can be loaded and processed. 
+    Non-technical explanation: We take videos, split them into frames, and optionally 
+    transform them for tasks like classification or motion analysis.
+    </p>
+    """, unsafe_allow_html=True)
+
+    st.write("---")
+
+    # 2. How It Works
+    st.markdown("<h3 style='text-align:center;'>2. How It Works</h3>", unsafe_allow_html=True)
     st.markdown(
         """
-        <div style="text-align: center; font-size: 18px;">
-        Explore different approaches to loading videos in PyKale. 
-        Select one of the demos below to see how frames are sampled, transformed, and displayed.
+        <div style="text-align: center;">
+            1️⃣ **Load the video dataset** → Extract frames  <br><br>
+            2️⃣ **Apply different sampling strategies** → Sparse, Continuous, or Transforms  <br><br>
+            3️⃣ **Visualize the frames** → We show them below in Streamlit
         </div>
         """,
         unsafe_allow_html=True
@@ -103,13 +128,22 @@ def video_demo_page():
 
     st.write("---")
 
-    st.markdown("<h3 style='text-align:center; margin-bottom: -10px;'>Choose a Demo</h3>", unsafe_allow_html=True)
+    # 3. Interactive Demo
+    st.markdown("<h3 style='text-align:center;'>3. Interactive Demo</h3>", unsafe_allow_html=True)
+    
+    st.markdown("""
+    <p style="text-align:center; font-size:16px;">
+    Choose a sampling or transformation method:
+    </p>
+    """, unsafe_allow_html=True)
 
-    col1, col2, col3 = st.columns([1.66,1,1])
+
+
+    col1, col2, col3 = st.columns([1.45,1,1])
     with col2:
         demo = st.radio(
             "",
-            ["Demo 1", "Demo 2", "Demo 3", "Demo 4"],
+            ["Sparse Sampling (Demo 1)", "Continuous Frames (Demo 2)", "Transforms & Tensors (Demo 3)", "Multi-Label Example (Demo 4)"],
             label_visibility="collapsed",  
             index=None,
             horizontal=False
@@ -118,17 +152,47 @@ def video_demo_page():
     st.write("---")
 
 
-
-
-
-    if demo == "Demo 1":
+    if demo == "Sparse Sampling (Demo 1)":
         demo_1()
-    elif demo == "Demo 2":
+    elif demo == "Continuous Frames (Demo 2)":
         demo_2()
-    elif demo == "Demo 3":
+    elif demo == "Transforms & Tensors (Demo 3)":
         demo_3()
-    elif demo == "Demo 4":
+    elif demo == "Multi-Label Example (Demo 4)":
         demo_4()
+
+    # 4. Under the Hood
+    st.write("---")
+    st.header("4. Under the Hood")
+    with st.expander("Show Common Video Loading Code"):
+        st.code("""
+            # Example snippet
+            dataset = VideoFrameDataset(
+                root_path="...", 
+                annotationfile_path="...",
+                num_segments=5,
+                frames_per_segment=1,
+                transform=some_transforms,
+                ...
+            )
+        """)
+
+    st.write("---")
+    st.header("5. Key Takeaways & Next Steps")
+    st.markdown("""
+    - 🎯 **Sparse Sampling** → Quickly sample frames without reading all of them.  
+    - 🎯 **Continuous Frames** → Keep frames in sequence for smooth motion insights.  
+    - 🎯 **Transforms & Tensors** → Prep frames for deep learning.  
+    - 🎯 **Multi-Label** → Some datasets have multiple labels (verb, noun, etc.).
+    """)
+
+    st.markdown("""
+    <p>
+    📖 Read more in the <a href="https://pykale.readthedocs.io/" target="_blank">PyKale docs</a>.
+    </p>
+    """, unsafe_allow_html=True)
+
+    
 
 
 def domain_adaptation_page():
