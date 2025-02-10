@@ -7,139 +7,133 @@ from kale.pipeline.multi_domain_adapter import CoIRLS
 import streamlit as st
 import pandas as pd
 import altair as alt
+from helpers.constants import N_SAMPLES, SUBHEADING_COLOR
 
 
-# CONSTANTS
-N_SAMPLES = 200
 
-
-def generate_toy_data():
-    np.random.seed(29118)
-    # Generate toy data
+def run_domain_adaptation_pipeline(alpha_value, lambda_value, seed):
+    # 1. Generate toy data with user-defined seed
+    np.random.seed(seed)
     xs, ys = make_blobs(N_SAMPLES, centers=[[0, 0], [0, 2]], cluster_std=[0.3, 0.35])
     xt, yt = make_blobs(N_SAMPLES, centers=[[2, -2], [2, 0.2]], cluster_std=[0.35, 0.4])
 
-    return xs, ys, xt, yt
-
-def generate_ridge_data(xs, ys, xt, yt):
-    clf = RidgeClassifier(alpha=1.0)
+    # 2. Ridge Classifier
+    clf = RidgeClassifier(alpha=alpha_value)
     clf.fit(xs, ys)
-
     yt_pred = clf.predict(xt)
-    accuracy = accuracy_score(yt, yt_pred)
-
+    ridge_acc = accuracy_score(yt, yt_pred)
     ys_score = clf.decision_function(xs)
     yt_score = clf.decision_function(xt)
 
-    return accuracy, ys_score, yt_score
-
-
-def generate_domain_data(xs, ys, xt, yt):
-    clf_ = CoIRLS(lambda_=1)
-    
+    # 3. Domain Adaptation with CoIRLS
     covariates = np.zeros(N_SAMPLES * 2)
     covariates[:N_SAMPLES] = 1
     enc = OneHotEncoder(handle_unknown="ignore")
     covariates_mat = enc.fit_transform(covariates.reshape(-1, 1)).toarray()
 
-    x = np.concatenate((xs, xt))
-    clf_.fit(x, ys, covariates_mat)
-    yt_pred_ = clf_.predict(xt)
-    accuracy = accuracy_score(yt, yt_pred_)
+    x_all = np.concatenate((xs, xt))
+    clf_adapt = CoIRLS(lambda_=lambda_value)
+    clf_adapt.fit(x_all, ys, covariates_mat)
+    yt_pred_adapt = clf_adapt.predict(xt)
+    adapt_acc = accuracy_score(yt, yt_pred_adapt)
 
-    ys_score = clf_.decision_function(xs).detach().numpy().reshape(-1)
-    yt_score = clf_.decision_function(xt).detach().numpy().reshape(-1)
+    ys_score_adapt = clf_adapt.decision_function(xs).detach().numpy().ravel()
+    yt_score_adapt = clf_adapt.decision_function(xt).detach().numpy().ravel()
 
-    return accuracy, ys_score, yt_score
+    return ridge_acc, adapt_acc, ys_score, yt_score, ys_score_adapt, yt_score_adapt, xs, ys, xt, yt
 
 
 
-def domain_adaptation_example():    
-    # generate data for app to use
-    xs, ys, xt, yt = generate_toy_data() 
-    acc, ys_score, yt_score = generate_ridge_data(xs, ys, xt, yt)
-    acc_, ys_score_, yt_score_ = generate_domain_data(xs, ys, xt, yt)    
 
-    # create scatter plot for source
-    st.title("Scatter Plot For Source")
-    chart_data = pd.DataFrame({
+def show_scatter_plots(xs, ys, xt, yt):
+    """Display scatter plots for source & target data in Streamlit."""
+
+    # Source scatter
+    st.markdown(f"<h4 style='text-align:center;color:{SUBHEADING_COLOR};'>Source Scatter Plot</h4>", unsafe_allow_html=True)
+    
+    source_df = pd.DataFrame({
         "x": xs[:, 0],
         "y": xs[:, 1],
         "label": np.where(ys == 1, "Positive", "Negative")
     })
 
-    scatter_data = alt.Chart(chart_data).mark_circle().encode(
-        x="x", 
-        y="y", 
+    scatter_src = alt.Chart(source_df).mark_circle(size=60).encode(
+        x="x",
+        y="y",
         color="label",
         tooltip=["x", "y", "label"]
-    )
+    ).properties(width=500, height=350)
+
+    col_left, col_mid, col_right = st.columns([3,4,2])
+
+    with col_mid:
+        st.altair_chart(scatter_src, use_container_width=False)
+
+    # Target scatter
+    st.markdown(f"<h4 style='text-align:center;color:{SUBHEADING_COLOR};'>Target Scatter Plot</h4>", unsafe_allow_html=True)
     
-    st.altair_chart(
-        scatter_data, 
-        use_container_width=True
-    )
-
-
-    # create scatter plot for target
-    st.title("Scatter Plot For Target")
-    chart_data = pd.DataFrame({
+    target_df = pd.DataFrame({
         "x": xt[:, 0],
         "y": xt[:, 1],
         "label": np.where(yt == 1, "Positive", "Negative")
     })
 
-    scatter_data = alt.Chart(chart_data).mark_circle().encode(
-        x="x", 
-        y="y", 
+    scatter_tgt = alt.Chart(target_df).mark_circle(size=60).encode(
+        x="x",
+        y="y",
         color="label",
         tooltip=["x", "y", "label"]
-    )
+    ).properties(width=500, height=350)
+
+    col_left2, col_mid2, col_right2 = st.columns([3,4,2])
+
+    with col_mid2:
+        st.altair_chart(scatter_tgt, use_container_width=False)
+
+
+def show_score_histograms(ys_score, yt_score, ys_score_adapt, yt_score_adapt):
+    """Plot decision score distributions for both classifiers."""
+
+    # Ridge scores
+    st.markdown(f"<h4 style='text-align:center;color:{SUBHEADING_COLOR};'>Ridge Classifier Score Distribution</h4>", unsafe_allow_html=True)
     
-    st.altair_chart(
-        scatter_data, 
-        use_container_width=True
-    )
-
-
-    # create text elements
-    st.write("Accuracy on target domain: {:.2f}".format(acc))
-    st.write("Accuracy on target domain: {:.2f}".format(acc_))
-
-
-    # Create histogram for ridge classifier    
-    data = pd.DataFrame({
+    ridge_data = pd.DataFrame({
         'Score': np.concatenate([ys_score, yt_score]),
-        'Type': ['Source'] * len(ys_score) + ['Target'] * len(yt_score)
+        'Type': (['Source'] * len(ys_score)) + (['Target'] * len(yt_score))
     })
-
-    chart = alt.Chart(data).mark_bar(opacity=0.6).encode(
+    
+    ridge_hist = alt.Chart(ridge_data).mark_bar(opacity=0.6).encode(
         x=alt.X('Score:Q', bin=alt.Bin(maxbins=30), title='Decision Scores'),
         y=alt.Y('count()', title='Count'),
-        color=alt.Color('Type:N', scale=alt.Scale(domain=['Source', 'Target'], range=['#FF0000', '#0000FF']))
-    )
+        color=alt.Color(
+            'Type:N',
+            scale=alt.Scale(domain=['Source','Target'], range=['#FF0000','#0000FF'])
+        )
+    ).properties(width=500, height=350)
 
-    st.title("Ridge classifier decision score distribution")
-    st.altair_chart(chart, use_container_width=True)
+    c1_left, c1_mid, c1_right = st.columns([3,4,2])
+    with c1_mid:
+        st.altair_chart(ridge_hist, use_container_width=False)
 
-
-
-
-    # Create histogram for Domain Adaptation Classifier    
-    data = pd.DataFrame({
-        'Score': np.concatenate([ys_score_, yt_score_]),
-        'Type': ['Source'] * len(ys_score_) + ['Target'] * len(yt_score_)
+    # Adaptation scores
+    st.markdown(f"<h4 style='text-align:center;color:{SUBHEADING_COLOR};'>CoIRLS Adaptation Score Distribution</h4>", unsafe_allow_html=True)
+    
+    adapt_data = pd.DataFrame({
+        'Score': np.concatenate([ys_score_adapt, yt_score_adapt]),
+        'Type': (['Source'] * len(ys_score_adapt)) + (['Target'] * len(yt_score_adapt))
     })
 
-    chart = alt.Chart(data).mark_bar(opacity=0.6).encode(
+    adapt_hist = alt.Chart(adapt_data).mark_bar(opacity=0.6).encode(
         x=alt.X('Score:Q', bin=alt.Bin(maxbins=30), title='Decision Scores'),
         y=alt.Y('count()', title='Count'),
-        color=alt.Color('Type:N', scale=alt.Scale(domain=['Source', 'Target'], range=['#FF0000', '#0000FF']))
-    )
+        color=alt.Color(
+            'Type:N',
+            scale=alt.Scale(domain=['Source','Target'], range=['#FF0000','#0000FF'])
+        )
+    ).properties(width=500, height=350)
 
-    st.title("Domain adaptation classifier decision score distribution")
-    st.altair_chart(chart, use_container_width=True)
-
-
+    c2_left, c2_mid, c2_right = st.columns([3,4,2])
+    with c2_mid:
+        st.altair_chart(adapt_hist, use_container_width=False)
 
 

@@ -8,7 +8,7 @@ from torchvision import transforms
 from kale.loaddata.videos import VideoFrameDataset
 from kale.prepdata.video_transform import ImglistToTensor
 import streamlit as st
-
+from helpers.helper import display_frames_in_grid
 
 def denormalize(video_tensor):
     """
@@ -21,24 +21,6 @@ def denormalize(video_tensor):
         mean=[-0.485 / 0.229, -0.456 / 0.224, -0.406 / 0.225], std=[1 / 0.229, 1 / 0.224, 1 / 0.225]
     )
     return (inverse_normalize(video_tensor) * 255.0).type(torch.uint8).permute(0, 2, 3, 1).numpy()
-
-def display_frames_in_grid(frames, num_cols=3):
-    """
-    Helper function to display a list of frames (PIL images or arrays) in a grid layout.
-    Each row has `num_cols` columns.
-    """
-    rows_needed = (len(frames) + num_cols - 1) // num_cols
-    for row_idx in range(rows_needed):
-        cols = st.columns(num_cols)
-        for col_idx in range(num_cols):
-            frame_index = row_idx * num_cols + col_idx
-            if frame_index < len(frames):
-                with cols[col_idx]:
-                    st.markdown(
-                        f"<h5 style='text-align: center;'>Frame {frame_index + 1}</h5>",
-                        unsafe_allow_html=True
-                    )
-                    st.image(frames[frame_index], use_column_width=True)
 
 
 
