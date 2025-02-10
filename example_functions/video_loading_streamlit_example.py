@@ -43,16 +43,33 @@ def display_frames_in_grid(frames, num_cols=3):
 
 
 def demo_1():
-    st.markdown("<h3 style='text-align: center;'>Demo 1: Basic Sampling</h3>", unsafe_allow_html=True)
+    # Main heading for the demo
     st.markdown(
-        """
-        <p style="text-align:center;">
-        Load <strong>5 sparse segments</strong> (1 frame each) 
-        from the <em>first</em> video sample in the dataset.
-        </p>
-        """,
+        "<h3 style='text-align: center; color:#16a085;'>🍃 Basic Sampling</h3>",
         unsafe_allow_html=True
     )
+
+    # 1. Overview
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Overview</h4>", unsafe_allow_html=True)
+    st.markdown("""
+    <p style="text-align:center;">
+      We load <strong>5 short clips</strong> from the first video, each with 1 frame. 
+      This quickly shows you different points in the video without scanning all the frames.
+    </p>
+    """, unsafe_allow_html=True)
+
+    # 2. Implementation
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Implementation</h4>", unsafe_allow_html=True)
+    st.markdown("""
+    <p style="text-align:center;">
+      We create a <code>VideoFrameDataset</code> with <strong>num_segments=5</strong> 
+      and <strong>frames_per_segment=1</strong>. That means for each segment, we only grab 1 frame. 
+    </p>
+    """, unsafe_allow_html=True)
+    # (No large code snippet here; or you could put st.code(...) if you want.)
+
+    # 3. Results
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Results</h4>", unsafe_allow_html=True)
 
     videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset")
     annotation_file = os.path.join(videos_root, "annotations.txt")
@@ -68,28 +85,39 @@ def demo_1():
         test_mode=False,
     )
 
+    # Grab the first sample
     sample = dataset[0]
-    frames = sample[0]  
+    frames = sample[0]
 
-
-    st.markdown("<h4 style='text-align:center;'>Extracted Video Frames</h4>", unsafe_allow_html=True)
-
-    # Display frames in a grid
     display_frames_in_grid(frames, num_cols=3)
 
-
 def demo_2():
-    st.markdown("<h3 style='text-align: center;'>Demo 2: Continuous Frame Clip</h3>", unsafe_allow_html=True)
+    # Main heading
     st.markdown(
-        """
-        <p style="text-align:center;">
-        Load <strong>9 consecutive frames</strong> from a single segment in the 
-        <em>second</em> video sample. This illustrates continuous clip loading 
-        instead of sparse sampling.
-        </p>
-        """,
+        "<h3 style='text-align: center; color:#16a085;'>🎞️ Continuous Frame Clip</h3>",
         unsafe_allow_html=True
     )
+
+    # 1. Overview
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Overview</h4>", unsafe_allow_html=True)
+    st.markdown("""
+    <p style="text-align:center;">
+      We load <strong>9 consecutive frames</strong> from one segment in the second video. 
+      This is useful to see how the motion evolves frame by frame.
+    </p>
+    """, unsafe_allow_html=True)
+
+    # 2. Implementation
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Implementation</h4>", unsafe_allow_html=True)
+    st.markdown("""
+    <p style="text-align:center;">
+      By setting <strong>num_segments=1</strong> and <strong>frames_per_segment=9</strong>,
+      we pull 9 continuous frames in a row, capturing a smooth slice of the video.
+    </p>
+    """, unsafe_allow_html=True)
+
+    # 3. Results
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Results</h4>", unsafe_allow_html=True)
 
     videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset")
     annotation_file = os.path.join(videos_root, "annotations.txt")
@@ -106,40 +134,47 @@ def demo_2():
     )
 
     sample = dataset[1]
-    frames = sample[0]  # list of PIL images
+    frames = sample[0]
 
-    st.markdown("<h4 style='text-align:center;'>Extracted Video Frames</h4>", unsafe_allow_html=True)
-
-    # Display frames in a grid
     display_frames_in_grid(frames, num_cols=3)
 
 
 
 
 def demo_3():
-    st.markdown("<h3 style='text-align: center;'>Demo 3: Transform & Tensor</h3>", unsafe_allow_html=True)
     st.markdown(
-        """
-        <p style="text-align:center;">
-        Apply PyTorch transforms (<code>Resize</code>, <code>CenterCrop</code>, <code>Normalize</code>) 
-        to <strong>5 sampled frames</strong> and display them. 
-        Also shows a brief example of <code>DataLoader</code> usage.
-        </p>
-        """,
+        "<h3 style='text-align: center; color:#16a085;'>🧰 Transforms & Tensors</h3>",
         unsafe_allow_html=True
     )
+
+    # 1. Overview
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Overview</h4>", unsafe_allow_html=True)
+    st.markdown("""
+    <p style="text-align:center;">
+      We resize and normalize these frames, getting them ready for a neural network. 
+      Then we demonstrate how a <strong>DataLoader</strong> can batch them up.
+    </p>
+    """, unsafe_allow_html=True)
+
+    # 2. Implementation
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Implementation</h4>", unsafe_allow_html=True)
+    st.markdown("""
+    <p style="text-align:center;">
+      A <code>transforms.Compose</code> includes <em>Resize</em>, <em>CenterCrop</em>, 
+      and <em>Normalize</em>. We convert the list of frames to a PyTorch tensor, 
+      so each frame is <strong>Channels × Height × Width</strong>.
+    </p>
+    """, unsafe_allow_html=True)
 
     videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
-    preprocess = transforms.Compose(
-        [
-            ImglistToTensor(),  # list of PIL images to (FRAMES x CHANNELS x HEIGHT x WIDTH) tensor
-            transforms.Resize(299),  # image batch, resize smaller edge to 299
-            transforms.CenterCrop(299),  # image batch, center crop to square 299x299
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ]
-    )
+    preprocess = transforms.Compose([
+        ImglistToTensor(),
+        transforms.Resize(299),
+        transforms.CenterCrop(299),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
 
     dataset = VideoFrameDataset(
         root_path=videos_root,
@@ -153,67 +188,79 @@ def demo_3():
     )
 
     sample = dataset[1]
-    frame_tensor = sample[0]  
+    frame_tensor = sample[0]
 
-    # Show shape
+    # 3. Results
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Results</h4>", unsafe_allow_html=True)
+
+    num_frames, channels, height, width = frame_tensor.size()
     st.markdown(
-        f"<h4 style='text-align:center;'>Video Tensor Size: {tuple(frame_tensor.size())}</h4>",
+        f"""
+        <div style="text-align:center;">
+          <p><strong>{num_frames}</strong> frames, each with <strong>{channels}</strong> color channels, 
+          at <strong>{height}×{width}</strong> resolution.</p>
+        </div>
+        """,
         unsafe_allow_html=True
     )
 
-    # Plot Images
+    # Denormalize for display
     frame_tensor = denormalize(frame_tensor)
-
-    # Display frames in a grid
-    st.markdown("<h4 style='text-align:center;'>Transformed & Denormalized Frames</h4>", unsafe_allow_html=True)
+    st.markdown("<h5 style='text-align:center;'>Transformed & Denormalized Frames</h5>", unsafe_allow_html=True)
     display_frames_in_grid(frame_tensor, num_cols=3)
 
-
-    dataloader = torch.utils.data.DataLoader(
-        dataset=dataset, batch_size=2, shuffle=True, num_workers=4, pin_memory=True
-    )
-
     st.write("---")
-    st.markdown("<h4 style='text-align:center;'>DataLoader Example (first batch)</h4>", unsafe_allow_html=True)
+    st.markdown("<h5 style='text-align:center;'>Small DataLoader Example</h5>", unsafe_allow_html=True)
+    dataloader = torch.utils.data.DataLoader(dataset=dataset, batch_size=2, shuffle=True, num_workers=4, pin_memory=True)
 
     for video_batch, labels in dataloader:
-        # Show the shape of the first batch
+        batch_size = video_batch.size(0)
         st.markdown(
             f"""
-            <p style="text-align:center;">
-            <strong>Video Batch Tensor Size:</strong> {tuple(video_batch.size())} <br/>
-            <strong>Batch Labels Shape:</strong> {tuple(labels.size())} <br/>
-            Labels: {labels.tolist()}
-            </p>
+            <div style="text-align:center;">
+              <p>We loaded a batch of <strong>{batch_size}</strong> samples at once.</p>
+              <p style="color:#7f8c8d;">(For advanced users: shapes are {tuple(video_batch.size())} & {tuple(labels.size())}.)</p>
+            </div>
             """,
             unsafe_allow_html=True
         )
         break
 
 def demo_4():
-    st.markdown("<h3 style='text-align: center;'>Demo 4: Multi-Label Example</h3>", unsafe_allow_html=True)
     st.markdown(
-        """
-        <p style="text-align:center;">
-        Demonstration of a dataset with <strong>multiple labels per sample</strong> 
-        (e.g., <em>verb, noun, action</em>). We'll load the first batch from a 
-        DataLoader and show how the labels are structured.
-        </p>
-        """,
+        "<h3 style='text-align: center; color:#16a085;'>👥 Multi-Label Example</h3>",
         unsafe_allow_html=True
     )
+
+    # 1. Overview
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Overview</h4>", unsafe_allow_html=True)
+    st.markdown("""
+    <p style="text-align:center;">
+      Some video clips have <strong>multiple labels</strong> (e.g., verb, noun, action). 
+      We load a small batch to see how that works in practice.
+    </p>
+    """, unsafe_allow_html=True)
+
+    # 2. Implementation
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Implementation</h4>", unsafe_allow_html=True)
+    st.markdown("""
+    <p style="text-align:center;">
+      This dataset includes 3 labels per clip. Using 
+      <code>VideoFrameDataset</code> with <em>num_segments=5</em> 
+      and <em>frames_per_segment=1</em> still grabs frames, but 
+      we also retrieve multiple labels for each sample.
+    </p>
+    """, unsafe_allow_html=True)
 
     videos_root = os.path.join(os.getcwd(), "datasets/demo_dataset_multilabel")
     annotation_file = os.path.join(videos_root, "annotations.txt")
 
-    preprocess = transforms.Compose(
-        [
-            ImglistToTensor(),  # list of PIL images to (FRAMES x CHANNELS x HEIGHT x WIDTH) tensor
-            transforms.Resize(299),  # image batch, resize smaller edge to 299
-            transforms.CenterCrop(299),  # image batch, center crop to square 299x299
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-        ]
-    )
+    preprocess = transforms.Compose([
+        ImglistToTensor(),
+        transforms.Resize(299),
+        transforms.CenterCrop(299),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+    ])
 
     dataset = VideoFrameDataset(
         root_path=videos_root,
@@ -226,21 +273,26 @@ def demo_4():
         test_mode=False,
     )
 
+    # 3. Results
+    st.markdown("<h4 style='text-align:center; color:#16a085;'>Results</h4>", unsafe_allow_html=True)
+
     dataloader = torch.utils.data.DataLoader(
         dataset=dataset, batch_size=3, shuffle=True, num_workers=2, pin_memory=True
     )
 
-    st.markdown("<br/>", unsafe_allow_html=True)
-
-
     for video_batch, (labels1, labels2, labels3) in dataloader:
+        batch_size = video_batch.size(0)
         st.markdown(
             f"""
             <div style="text-align:center;">
-              <p><strong>Video Batch Tensor Size:</strong> {tuple(video_batch.size())}</p>
-              <p><em>Labels1 Shape</em> (e.g., verb): {tuple(labels1.size())} — {labels1.tolist()}</p>
-              <p><em>Labels2 Shape</em> (e.g., noun): {tuple(labels2.size())} — {labels2.tolist()}</p>
-              <p><em>Labels3 Shape</em> (e.g., action): {tuple(labels3.size())} — {labels3.tolist()}</p>
+              <p>We loaded <strong>{batch_size}</strong> samples. Each has 3 labels 
+                (<em>verb, noun, action</em> or similar).</p>
+              <p style="color:#7f8c8d;">For instance:</p>
+              <ul style="list-style-position: inside; display:inline-block; text-align:left;">
+                <li><strong>Labels1</strong> could be a verb (run, jump, etc.)</li>
+                <li><strong>Labels2</strong> could be a noun (ball, table, etc.)</li>
+                <li><strong>Labels3</strong> could be the combined action (e.g., “run with ball”).</li>
+              </ul>
             </div>
             """,
             unsafe_allow_html=True
