@@ -3,3 +3,4 @@ streamlit-card
 matplotlib
 streamlit-navigation-bar
 openai
+python-dotenv
