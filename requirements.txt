@@ -2,3 +2,4 @@ pykale
 streamlit-card
 matplotlib
 streamlit-navigation-bar
+openai
