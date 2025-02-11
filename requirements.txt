@@ -2,5 +2,5 @@ pykale
 streamlit-card
 matplotlib
 streamlit-navigation-bar
-openai
+openai==0.28
 python-dotenv
