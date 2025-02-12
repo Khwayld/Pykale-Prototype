@@ -64,3 +64,11 @@ Here is some information about PyKale:
 Please guide the user step by step to use PyKale if they need, or point them to specific examples.
 Always greet them politely and remain helpful.
 """
+
+
+PREDEFINED_PROMPTS = {
+    "Show me the Video Loading Example": "I want to see how video loading works in PyKale.",
+    "Explain Domain Adaptation": "Can you explain what domain adaptation is and why it's useful in PyKale?",
+    "Show me code examples": "Please provide a code example of how to use PyKale.",
+    "Help me get started": "I need help getting started with PyKale. What should I do first?"
+}

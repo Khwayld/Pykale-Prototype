@@ -1,5 +1,5 @@
 import streamlit as st
-from helpers.constants import SYSTEM_PROMPT
+from helpers.constants import SYSTEM_PROMPT, PREDEFINED_PROMPTS
 from dotenv import load_dotenv
 import os
 import openai
@@ -11,6 +11,8 @@ if not api_key:
     st.error("OPENAI_API_KEY not found. Please set it in your environment or .env file.")
 
 openai.api_key = api_key
+
+
 
 def display_chatbot():
     """

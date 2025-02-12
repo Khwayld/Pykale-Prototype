@@ -1,6 +1,9 @@
 import streamlit as st
 from navigation import navbar
-from pages import home_page, archive_page, video_demo_page, domain_adaptation_page
+from views.home_page import home_page
+from views.archive_page import archive_page
+from views.video_demo_page.video_main import video_demo_page
+from views.domain_adaptation_page.domain_main import domain_adaptation_page
 
 
 
