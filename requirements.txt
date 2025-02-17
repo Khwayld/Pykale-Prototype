@@ -8,3 +8,4 @@ chromadb
 langchain
 tiktoken
 langchain-community
+pysqlite3-binary
