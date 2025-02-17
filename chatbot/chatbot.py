@@ -1,8 +1,11 @@
 import streamlit as st
-from helpers.constants import SYSTEM_PROMPT, PREDEFINED_PROMPTS
 from dotenv import load_dotenv
 import os
-import openai
+from openai import OpenAI
+from helpers.helper import load_file
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
@@ -10,7 +13,32 @@ api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     st.error("OPENAI_API_KEY not found. Please set it in your environment or .env file.")
 
-openai.api_key = api_key
+client = OpenAI(
+    api_key=api_key,  
+)
+
+SYSTEM_PROMPT = load_file("./datasets/pykale_prompt.txt")
+
+embeddings = OpenAIEmbeddings(openai_api_key=api_key)
+chroma_db = Chroma(
+    collection_name="pykale_xml",
+    embedding_function=embeddings,
+    persist_directory="chroma_db",
+)
+
+def retrieve_relevant_chunks(query: str, k=3) -> str:
+    """
+    Search Chroma DB for the top-k chunks relevant to `query`.
+    Return them combined into a single context string.
+    """
+    docs = chroma_db.similarity_search(query, k=k)
+    # Each doc has `doc.page_content` and `doc.metadata`
+    context_blocks = []
+    for d in docs:
+        src = d.metadata.get("source", "unknown")
+        content = d.page_content
+        context_blocks.append(f"[Source: {src}]\n{content}")
+    return "\n\n".join(context_blocks)
 
 
 
@@ -47,10 +75,31 @@ def display_chatbot():
         with st.chat_message("user"):
             st.write(user_text)
 
-        response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=st.session_state["messages"],
-            temperature=0.7,
+        context = retrieve_relevant_chunks(user_text, k=3)
+
+        context_message = {
+            "role": "assistant",
+            "content": f"Relevant context:\n{context}\n"
+        }
+
+        temp_messages = []
+
+        temp_messages.append({
+            "role": "system",
+            "content": SYSTEM_PROMPT
+        })
+
+        temp_messages.append(context_message)
+
+        temp_messages.append({
+            "role": "user",
+            "content": user_text
+        })
+
+
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=temp_messages
         )
 
         bot_text = response.choices[0].message.content.strip()

@@ -22,10 +22,10 @@ EXAMPLES = [
     },
 
     {
-        "name": "Third Example",
-        "description": "Some Description",
+        "name": "Digits DANN Example",
+        "description": "Testing",
         "image": "",
-        "nav": "domain_adaptation",
+        "nav": "digits_dann",
         "category": "Other Transfer Learning"
     },
 
@@ -53,17 +53,6 @@ EXAMPLES = [
         "category": "Video Processing"
     }
 ]
-
-
-SYSTEM_PROMPT = """
-You are PyKale Assistant, an AI specialized in the PyKale library.
-Here is some information about PyKale:
-- PyKale is a library built on PyTorch for multimodal learning and transfer learning from multiple data sources.
-- It includes modules for domain adaptation, video loading and transforms, and more.
-- We have examples like 'Video Loading Example', 'Domain Adaptation Example', etc.
-Please guide the user step by step to use PyKale if they need, or point them to specific examples.
-Always greet them politely and remain helpful.
-"""
 
 
 PREDEFINED_PROMPTS = {
