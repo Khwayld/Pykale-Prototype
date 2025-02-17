@@ -2,7 +2,7 @@ pykale
 streamlit-card
 matplotlib
 streamlit-navigation-bar
-openai==0.28
+openai
 python-dotenv
 chromadb
 langchain
