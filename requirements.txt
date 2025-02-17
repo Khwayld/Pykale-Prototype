@@ -7,3 +7,4 @@ python-dotenv
 chromadb
 langchain
 tiktoken
+langchain-community
