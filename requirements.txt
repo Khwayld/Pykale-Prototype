@@ -4,7 +4,7 @@ matplotlib
 streamlit-navigation-bar
 openai
 python-dotenv
-chromadb
+chromadb==0.3.26
 langchain
 tiktoken
 langchain-community
