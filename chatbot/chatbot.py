@@ -77,25 +77,11 @@ def display_chatbot():
 
         context = retrieve_relevant_chunks(user_text, k=3)
 
-        context_message = {
-            "role": "assistant",
-            "content": f"Relevant context:\n{context}\n"
-        }
-
-        temp_messages = []
-
+        temp_messages = st.session_state["messages"][:]
         temp_messages.append({
             "role": "system",
-            "content": SYSTEM_PROMPT
+            "content": f"Relevant context:\n{context}"
         })
-
-        temp_messages.append(context_message)
-
-        temp_messages.append({
-            "role": "user",
-            "content": user_text
-        })
-
 
         response = client.chat.completions.create(
             model="gpt-4o",

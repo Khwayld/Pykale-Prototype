@@ -4,7 +4,7 @@ from helpers.constants import EXAMPLES
 from navigation import go_to
 
 
-def archive_page():
+def archive_page():    
     st.markdown("<h1 style='text-align: center;'>Welcome To The Pykale Example Archive 👋</h1>", unsafe_allow_html=True)
     st.markdown("<h5 style='text-align: center;'>Here we explore some examples created in Pykale</h5>", unsafe_allow_html=True)
 

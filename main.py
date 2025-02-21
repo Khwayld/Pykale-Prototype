@@ -1,10 +1,11 @@
 import sys
 
-try:
-    import pysqlite3
-    sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
-except ImportError:
-    pass
+# Needed to fix enviroment errors on streamlit cloud. 
+# try:
+#     import pysqlite3
+#     sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+# except ImportError:
+#     pass
 
 import streamlit as st
 from navigation import navbar
