@@ -1,6 +1,6 @@
 import streamlit as st
 from helpers.constants import PRIMARY_COLOR, SUBHEADING_COLOR, DEFAULT_SEED
-from .domain_utils import run_domain_adaptation_pipeline, show_scatter_plots, show_score_histograms
+from helpers.domain_utils import run_domain_adaptation_pipeline, show_scatter_plots, show_score_histograms
 
 
 

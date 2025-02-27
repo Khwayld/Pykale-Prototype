@@ -8,7 +8,7 @@ def go_to(page):
 def navbar():
     """Sidebar navigation menu for switching pages."""
     st.sidebar.title("Navigation")
-    if st.sidebar.button("Home Page 🏠", key="nav_home"):
+    if st.sidebar.button("🏠 Home", key="nav_home"):
         go_to("home")
-    if st.sidebar.button("Archive Page 📚", key="nav_archive"):
-        go_to("archive")
+    if st.sidebar.button("📚 Learning Hub", key="nav_hub"):
+        go_to("hub")

@@ -1,8 +1,6 @@
 import os
 
-import matplotlib.pyplot as plt
 import torch
-from mpl_toolkits.axes_grid1 import ImageGrid
 from torchvision import transforms
 
 from kale.loaddata.videos import VideoFrameDataset

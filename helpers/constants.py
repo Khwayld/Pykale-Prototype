@@ -4,53 +4,37 @@ N_SAMPLES = 200
 PRIMARY_COLOR = "#16a085"
 SUBHEADING_COLOR = "#2980b9"
 
-EXAMPLES = [
+HUB = [
     {
-        "name": "Video Loading Example",
-        "description": "Load frames from short clips and display them in Streamlit for quick analysis.",
+        "name": "Getting Started with PyKale",
+        "description": "An introduction to PyKale, its purpose, and how to use it.",
         "image": "",
-        "nav": "video_example",
-        "category": "Video Processing"
+        "nav": "getting_started",
+        "category": "Guides"
     },
     
     {
-        "name": "Domain Adaptation Example",
-        "description": "Learn to adapt models across related domains for more robust predictions.",
+        "name": "The KALE API",
+        "description": "A detailed breakdown of how the PyKale API works.",
         "image": "",
-        "nav": "domain_adaptation",
-        "category": "Domain Adaptation",
+        "nav": "kale_api",
+        "category": "Guides",
     },
 
     {
-        "name": "Digits DANN Example",
-        "description": "Testing",
+        "name": "Domain Adaptation",
+        "description": "An interactive demonstration of domain adaptation with PyKale.",
         "image": "",
-        "nav": "digits_dann",
-        "category": "Other Transfer Learning"
+        "nav": "domain_adaptation",
+        "category": "Demo"
     },
 
     {
-        "name": "Fourth Example",
-        "description": "Some Description",
+        "name": "Video Dataset Loading & Augmentation",
+        "description": "An interactive demonstration on video preprocessing using PyKale.",
         "image": "",
-        "nav": "domain_adaptation",
-        "category": "Multi-Modal"
-    },
-
-    {
-        "name": "Fifth Example",
-        "description": "Some Description",
-        "image": "",
-        "nav": "domain_adaptation",
-        "category": "Domain Adaptation"
-    },
-
-    {
-        "name": "Sixth Example",
-        "description": "Some Description",
-        "image": "",
-        "nav": "domain_adaptation",
-        "category": "Video Processing"
+        "nav": "video_example",
+        "category": "Demo"
     }
 ]
 

@@ -10,9 +10,9 @@ import sys
 import streamlit as st
 from navigation import navbar
 from views.home_page import home_page
-from views.archive_page import archive_page
-from views.video_demo_page.video_main import video_demo_page
-from views.domain_adaptation_page.domain_main import domain_adaptation_page
+from views.hub import hub_page
+from views.video_main import video_demo_page
+from views.domain_main import domain_adaptation_page
 
 
 
@@ -27,8 +27,8 @@ def main():
     # Page routing
     if st.session_state["page"] == "home":
         home_page()
-    elif st.session_state["page"] == "archive":
-        archive_page()
+    elif st.session_state["page"] == "hub":
+        hub_page()
     elif st.session_state["page"] == "video_example":
         video_demo_page()
     elif st.session_state["page"] == "domain_adaptation":

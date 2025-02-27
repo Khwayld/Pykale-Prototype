@@ -1,6 +1,6 @@
 from helpers.constants import PRIMARY_COLOR
 import streamlit as st
-from .demos import demo_1, demo_2, demo_3, demo_4
+from helpers.video_utils import demo_1, demo_2, demo_3, demo_4
 
 
 def video_demo_page():    
