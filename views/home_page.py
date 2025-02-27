@@ -1,5 +1,4 @@
 import streamlit as st
-from views.chatbot import display_chatbot
 
 def home_page():
     """Streamlit Home Page for PyKale Hub with Centered Content & Chatbot."""
