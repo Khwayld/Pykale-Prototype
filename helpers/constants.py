@@ -8,15 +8,15 @@ HUB = [
     {
         "name": "Getting Started with PyKale",
         "description": "An introduction to PyKale, its purpose, and how to use it.",
-        "image": "",
-        "nav": "getting_started",
+        "image": "https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
+        "nav": "introduction",
         "category": "Guides"
     },
     
     {
         "name": "The KALE API",
         "description": "A detailed breakdown of how the PyKale API works.",
-        "image": "",
+        "image": "https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
         "nav": "kale_api",
         "category": "Guides",
     },
@@ -24,7 +24,7 @@ HUB = [
     {
         "name": "Domain Adaptation",
         "description": "An interactive demonstration of domain adaptation with PyKale.",
-        "image": "",
+        "image": "https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
         "nav": "domain_adaptation",
         "category": "Demo"
     },
@@ -32,7 +32,7 @@ HUB = [
     {
         "name": "Video Dataset Loading & Augmentation",
         "description": "An interactive demonstration on video preprocessing using PyKale.",
-        "image": "",
+        "image": "https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
         "nav": "video_example",
         "category": "Demo"
     }

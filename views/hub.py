@@ -5,6 +5,8 @@ from navigation import go_to
 
 
 def hub_page():    
+    """Hub page"""
+    
     st.markdown("<h1 style='text-align: center;'>Welcome To The Learning Hub 🎓</h1>", unsafe_allow_html=True)
     st.markdown("<h5 style='text-align: center;'>Explore guides, tutorials, and interactive demos to understand PyKale better.</h5>", unsafe_allow_html=True)
 
