@@ -1,5 +1,5 @@
 import streamlit as st
-from views.chatbot import display_chatbot
+# from views.chatbot import display_chatbot
 
 def chatbot_page():
     """Chatbot Page for PyKale Assistance with Clear Title and Instructions."""
@@ -38,4 +38,4 @@ def chatbot_page():
 
     st.write("---")
 
-    display_chatbot()
+    # display_chatbot()
