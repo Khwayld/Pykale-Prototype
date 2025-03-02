@@ -9,6 +9,13 @@ except ImportError:
 
 import streamlit as st
 from navigation import navbar
+from views.guides.kale_api_guide.embed_page import embed_page
+from views.guides.kale_api_guide.evaluate_page import evaluate_page
+from views.guides.kale_api_guide.interpret_page import interpret_page
+from views.guides.kale_api_guide.loaddata_page import loaddata_page
+from views.guides.kale_api_guide.pipeline_page import pipeline_page
+from views.guides.kale_api_guide.predict_page import predict_page
+from views.guides.kale_api_guide.prepdata_page import prepdata_page
 from views.home_page import home_page
 from views.hub import hub_page
 from views.demos.video_demo import video_demo_page
@@ -40,6 +47,20 @@ def main():
         kale_api_page()
     elif st.session_state["page"] == "chatbot_page":
         chatbot_page()
+    elif st.session_state["page"] == "loaddata_page":
+        loaddata_page()
+    elif st.session_state["page"] == "prepdata_page":
+        prepdata_page()
+    elif st.session_state["page"] == "embed_page":
+        embed_page()
+    elif st.session_state["page"] == "predict_page":
+        predict_page()
+    elif st.session_state["page"] == "evaluate_page":
+        evaluate_page()
+    elif st.session_state["page"] == "interpret_page":
+        interpret_page()
+    elif st.session_state["page"] == "pipeline_page":
+        pipeline_page()
 
 
 if __name__ == "__main__":
