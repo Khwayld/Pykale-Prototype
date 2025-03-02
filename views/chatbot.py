@@ -3,8 +3,8 @@ from dotenv import load_dotenv
 import os
 from openai import OpenAI
 from helpers.helper import load_file
-from langchain_community.embeddings import OpenAIEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
+from langchain_chroma import Chroma
 
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")

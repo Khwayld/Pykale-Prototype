@@ -18,8 +18,6 @@ def loaddata_page():
         unsafe_allow_html=True
     )
 
-    # --- Centered Back Button (placed below the main header) ---
-    # Use columns to center the button.
     col_left, col_center, col_right = st.columns([3, 1, 3])
     with col_center:
         if st.button("🔙 Back to API Guide"):
