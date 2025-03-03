@@ -1,5 +1,5 @@
 import streamlit as st
-from views.chatbot import display_chatbot
+from utils.chatbot_utils import display_chatbot
 
 def chatbot_page():
     """Chatbot Page for PyKale Assistance with Clear Title and Instructions."""

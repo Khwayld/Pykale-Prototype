@@ -5,7 +5,7 @@ from helpers.constants import (
     DEFAULT_SEED
 )
 
-from helpers.domain_utils import (
+from utils.domain_utils import (
     run_domain_adaptation_pipeline, 
     show_scatter_plots, 
     show_score_histograms

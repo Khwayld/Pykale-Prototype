@@ -20,6 +20,8 @@ def display_frames_in_grid(frames, num_cols=3):
                     st.image(frames[frame_index], use_column_width=True)
 
 
+
+
 def load_file(file_path: str) -> str:
     """Load a file from the given path and return as a string."""
     with open(file_path, "r", encoding="utf-8") as f:

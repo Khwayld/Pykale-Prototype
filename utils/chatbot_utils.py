@@ -6,6 +6,8 @@ from helpers.helper import load_file
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 
+
+# Initialize Open AI Client
 load_dotenv()
 api_key = os.getenv("OPENAI_API_KEY")
 
@@ -18,6 +20,8 @@ client = OpenAI(
 
 SYSTEM_PROMPT = load_file("./datasets/pykale_prompt.txt")
 
+
+# Initialize Chroma DB
 embeddings = OpenAIEmbeddings(openai_api_key=api_key)
 chroma_db = Chroma(
     collection_name="pykale_xml",
@@ -31,12 +35,14 @@ def retrieve_relevant_chunks(query: str, k=3) -> str:
     Return them combined into a single context string.
     """
     docs = chroma_db.similarity_search(query, k=k)
-    # Each doc has `doc.page_content` and `doc.metadata`
+
     context_blocks = []
+
     for d in docs:
         src = d.metadata.get("source", "unknown")
         content = d.page_content
         context_blocks.append(f"[Source: {src}]\n{content}")
+
     return "\n\n".join(context_blocks)
 
 
@@ -76,24 +82,23 @@ def display_chatbot():
 
         context = retrieve_relevant_chunks(user_text, k=3)
 
-        context_message = {
+        st.session_state["messages"].append({
             "role": "system",
             "content": f"Relevant context:\n{context}"
-        }
+        })
 
-        st.session_state["messages"].append(context_message)  
+        with st.chat_message("assistant"):
+            stream = client.chat.completions.create(
+                model="gpt-4o",
+                messages=st.session_state["messages"],
+                stream=True
+            )
 
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=st.session_state["messages"]
-        )
+            response = st.write_stream(stream)
 
-        bot_text = response.choices[0].message.content.strip()
 
         st.session_state["messages"].append({
             "role": "assistant",
-            "content": bot_text
+            "content": response
         })
         
-        with st.chat_message("assistant"):
-            st.write(bot_text)
