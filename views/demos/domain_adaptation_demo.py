@@ -11,6 +11,8 @@ from helpers.domain_utils import (
     show_score_histograms
 )
 
+from navigation import go_to
+
 
 
 def domain_adaptation_page():
@@ -40,6 +42,12 @@ def domain_adaptation_page():
             """, 
             unsafe_allow_html=True
         )
+
+
+        col_left, col_center, col_right = st.columns([3, 1.5, 3])
+        with col_center:
+            if st.button("🔙 Back to Hub"):
+                go_to("hub")
 
         st.markdown("---")
 

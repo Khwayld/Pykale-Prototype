@@ -1,4 +1,5 @@
 import streamlit as st
+from navigation import go_to
 
 def home_page():
     """Streamlit Home Page for PyKale Hub with Centered Content & Chatbot."""
@@ -47,3 +48,9 @@ def home_page():
         """,
         unsafe_allow_html=True
     )
+
+    col_left, col_center, col_right = st.columns([3, 1, 3])
+    with col_center:
+        if st.button("💬 Chat with Assistant"):
+            go_to("chatbot_page")
+

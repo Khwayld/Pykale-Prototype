@@ -10,7 +10,7 @@ def navbar():
     st.sidebar.title("Navigation")
     if st.sidebar.button("🏠 Home", key="nav_home"):
         go_to("home")
-    if st.sidebar.button("📚 Learning Hub", key="nav_hub"):
+    if st.sidebar.button("🎓 Learning Hub", key="nav_hub"):
         go_to("hub")
 
     if st.sidebar.button("💬 PyKale Assistant", key="nav_chatbot_page"):

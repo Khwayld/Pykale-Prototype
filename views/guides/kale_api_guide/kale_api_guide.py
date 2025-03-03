@@ -19,6 +19,13 @@ def kale_api_page():
         """,
         unsafe_allow_html=True
     )
+    
+    col_left, col_center, col_right = st.columns([3, 1, 3])
+    with col_center:
+        if st.button("🔙 Back to Hub"):
+            go_to("hub")
+
+
     st.write("---")
 
     # Define API modules with descriptions
