@@ -46,7 +46,7 @@ def run_domain_adaptation_pipeline(alpha_value, lambda_value, seed):
 
 
 def show_scatter_plots(xs, ys, xt, yt):
-    """Display scatter plots for source & target data in Streamlit."""
+    """Displays a scatter plot of source (xs, ys) and target (xt, yt) data."""
 
     # Source scatter
     st.markdown(f"<h4 style='text-align:center;color:{SUBHEADING_COLOR};'>Source Scatter Plot</h4>", unsafe_allow_html=True)
@@ -64,8 +64,7 @@ def show_scatter_plots(xs, ys, xt, yt):
         tooltip=["x", "y", "label"]
     ).properties(width=500, height=350)
 
-    col_left, col_mid, col_right = st.columns([3,4,2])
-
+    col_left, col_mid, col_right = st.columns([2,4,2])
     with col_mid:
         st.altair_chart(scatter_src, use_container_width=False)
 
@@ -85,9 +84,9 @@ def show_scatter_plots(xs, ys, xt, yt):
         tooltip=["x", "y", "label"]
     ).properties(width=500, height=350)
 
-    col_left2, col_mid2, col_right2 = st.columns([3,4,2])
 
-    with col_mid2:
+    col_left, col_mid, col_right = st.columns([2,4,2])
+    with col_mid:
         st.altair_chart(scatter_tgt, use_container_width=False)
 
 
@@ -111,7 +110,7 @@ def show_score_histograms(ys_score, yt_score, ys_score_adapt, yt_score_adapt):
         )
     ).properties(width=500, height=350)
 
-    c1_left, c1_mid, c1_right = st.columns([3,4,2])
+    c1_left, c1_mid, c1_right = st.columns([2,4,2])
     with c1_mid:
         st.altair_chart(ridge_hist, use_container_width=False)
 
@@ -132,7 +131,7 @@ def show_score_histograms(ys_score, yt_score, ys_score_adapt, yt_score_adapt):
         )
     ).properties(width=500, height=350)
 
-    c2_left, c2_mid, c2_right = st.columns([3,4,2])
+    c2_left, c2_mid, c2_right = st.columns([2,4,2])
     with c2_mid:
         st.altair_chart(adapt_hist, use_container_width=False)
 

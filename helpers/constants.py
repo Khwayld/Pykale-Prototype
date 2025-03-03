@@ -22,11 +22,11 @@ HUB = [
     },
 
     {
-        "name": "Domain Adaptation",
-        "description": "An interactive demonstration of domain adaptation with PyKale.",
+        "name": "Domain Adaptation on Toy Data",
+        "description": "An interactive tutorial & demo of domain adaptation with PyKale.",
         "image": "https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
         "nav": "domain_adaptation",
-        "category": "Demo"
+        "category": "Tutorial"
     },
 
     {
