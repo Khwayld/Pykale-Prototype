@@ -71,7 +71,7 @@ def introduction_page():
             <h3>⚙️ Installation</h3>
             <p><strong>Prerequisites:</strong></p>
             <ul style="display: inline-block; text-align: left;">
-                <li>🐍 Python <strong>3.8, 3.9,</strong> or <strong>3.10</strong></li>
+                <li>🐍 Python <strong>3.9, 3.10,</strong> or <strong>3.11</strong></li>
                 <li>⚡ PyTorch (Ensure it matches your hardware: CPU or GPU)</li>
                 <li>📊 (Optional) PyTorch Geometric (for graph-based tasks)</li>
             </ul>

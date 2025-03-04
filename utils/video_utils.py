@@ -70,6 +70,7 @@ def demo_1():
     frames = sample[0]
 
     display_frames_in_grid(frames, num_cols=3)
+    st.markdown("---")
 
 def demo_2():
     # Main heading
@@ -117,6 +118,7 @@ def demo_2():
     frames = sample[0]
 
     display_frames_in_grid(frames, num_cols=3)
+    st.markdown("---")
 
 
 
@@ -206,6 +208,8 @@ def demo_3():
         )
         break
 
+    st.markdown("---")
+
 def demo_4():
     st.markdown(
         "<h3 style='text-align: center; color:#16a085;'>👥 Multi-Label Example</h3>",
@@ -278,5 +282,7 @@ def demo_4():
             unsafe_allow_html=True
         )
         break
+    
+    st.markdown("---")
 
 

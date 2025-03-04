@@ -58,7 +58,7 @@ def domain_adaptation_page():
     # --- Step 1: Generate Toy Data ---
     with col_mid:
         st.markdown(
-            f"<h2 style='text-align:center; color:{SUBHEADING_COLOR};'>1. Generate Toy Data</h2>",
+            f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>1. Generate Toy Data</h2>",
             unsafe_allow_html=True
         )
 
@@ -101,7 +101,7 @@ def domain_adaptation_page():
     # --- Step 2: BASELINE CLASSIFIER (RIDGE) ---
     with col_mid:
         st.markdown(
-            f"<h2 style='text-align:center; color:{SUBHEADING_COLOR};'>2. Train a Ridge Classifier (Baseline)</h2>",
+            f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>2. Train a Ridge Classifier (Baseline)</h2>",
             unsafe_allow_html=True
         )
         st.write("""
@@ -110,7 +110,7 @@ def domain_adaptation_page():
             a distinct target domain, so performance on the target might be suboptimal.
         """)
 
-        with st.expander("Show the Ridge training code from domain_utils.py"):
+        with st.expander("Show the Ridge training code"):
             st.code("""
                 import numpy as np
                 from sklearn.linear_model import RidgeClassifier
@@ -145,7 +145,7 @@ def domain_adaptation_page():
     # --- Step 3: DOMAIN ADAPTATION WITH CoIRLS ---
     with col_mid:
         st.markdown(
-            f"<h2 style='text-align:center; color:{SUBHEADING_COLOR};'>3. Apply Domain Adaptation (CoIRLS)</h2>",
+            f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>3. Apply Domain Adaptation (CoIRLS)</h2>",
             unsafe_allow_html=True
         )
         st.write("""
@@ -155,7 +155,7 @@ def domain_adaptation_page():
         """, unsafe_allow_html=True)
 
 
-        with st.expander("Show the adaptation code from domain_utils.py"):
+        with st.expander("Show the adaptation code"):
             st.code("""
                 import numpy as np
                 from sklearn.preprocessing import OneHotEncoder
@@ -206,7 +206,7 @@ def domain_adaptation_page():
     # --------------------------------------------------------------------
     with col_mid:
         st.markdown(
-            f"<h2 style='text-align:center; color:{SUBHEADING_COLOR};'>4. Experiment with Hyperparameters</h2>",
+            f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>4. Experiment with Hyperparameters</h2>",
             unsafe_allow_html=True
         )
 
@@ -235,7 +235,7 @@ def domain_adaptation_page():
     # --- Scatter Plots ---
     with col_mid:
         st.markdown(
-            f"<h2 style='text-align:center; color:{SUBHEADING_COLOR};'>5A. Visualize Source & Target Data</h2>",
+            f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>5A. Visualize Source & Target Data</h2>",
             unsafe_allow_html=True
         )
 
@@ -256,7 +256,7 @@ def domain_adaptation_page():
     # --- Compare Classifier Accuracies ---
     with col_mid:
         st.markdown(
-            f"<h2 style='text-align:center; color:{SUBHEADING_COLOR};'>5B. Compare Accuracies</h2>",
+            f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>5B. Compare Accuracies</h2>",
             unsafe_allow_html=True
         )
 
@@ -272,12 +272,12 @@ def domain_adaptation_page():
 
         st.markdown(f"""
         <div style="display:flex; justify-content:center; gap:50px; margin:20px 0;">
-            <div style="border:2px solid {SUBHEADING_COLOR}; border-radius:5px; padding:10px; text-align:center; width:150px;">
+            <div style="border:2px solid {PRIMARY_COLOR}; border-radius:5px; padding:10px; text-align:center; width:150px;">
                 <p style="color:{SUBHEADING_COLOR}; margin:5px 0; font-size:18px;">Ridge</p>
                 <p style="font-size:24px; margin:5px 0;">{ridge_acc:.2f}</p>
                 <p style="color:gray; margin:0;">alpha = {alpha_value:.1f}</p>
             </div>
-            <div style="border:2px solid {SUBHEADING_COLOR}; border-radius:5px; padding:10px; text-align:center; width:150px;">
+            <div style="border:2px solid {PRIMARY_COLOR}; border-radius:5px; padding:10px; text-align:center; width:150px;">
                 <p style="color:{SUBHEADING_COLOR}; margin:5px 0; font-size:18px;">CoIRLS</p>
                 <p style="font-size:24px; margin:5px 0;">{adapt_acc:.2f}</p>
                 <p style="color:gray; margin:0;">lambda = {lambda_value:.1f}</p>
@@ -300,7 +300,7 @@ def domain_adaptation_page():
     # --- Score Distributions ---
     with col_mid:
         st.markdown(
-            f"<h2 style='text-align:center; color:{SUBHEADING_COLOR};'>5C. Decision Score Distributions</h2>",
+            f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>5C. Decision Score Distributions</h2>",
             unsafe_allow_html=True
         )
         st.write("""
@@ -317,7 +317,7 @@ def domain_adaptation_page():
     # --------------------------------------------------------------------
     with col_mid:
         st.markdown(
-            f"<h2 style='text-align:center; color:{SUBHEADING_COLOR};'>6. Key Takeaways</h2>",
+            f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>6. Key Takeaways</h2>",
             unsafe_allow_html=True
         )
 
