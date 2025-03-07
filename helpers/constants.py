@@ -26,7 +26,7 @@ HUB = [
         "description": "An interactive tutorial & demo of domain adaptation with PyKale.",
         "image": "https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
         "nav": "domain_adaptation",
-        "category": "Tutorial"
+        "category": "Demo"
     },
 
     {
@@ -35,6 +35,14 @@ HUB = [
         "image": "https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
         "nav": "video_example",
         "category": "Demo"
+    },
+
+    {
+        "name": "Build Your First PyKale Model",
+        "description": "Test.",
+        "image": "https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
+        "nav": "build_first_model_page",
+        "category": "Tutorial"
     }
 ]
 

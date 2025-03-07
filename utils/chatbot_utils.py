@@ -88,17 +88,25 @@ def display_chatbot():
         })
 
         with st.chat_message("assistant"):
-            stream = client.chat.completions.create(
+            text_placeholder = st.empty()
+            full_response = ""
+
+            response_stream = client.chat.completions.create(
                 model="gpt-4o",
                 messages=st.session_state["messages"],
                 stream=True
             )
 
-            response = st.write_stream(stream)
+            for chunk in response_stream:
+                if chunk.choices:
+                    delta = chunk.choices[0].delta
+                    if hasattr(delta, "content") and delta.content:
+                        full_response += delta.content
+                        text_placeholder.markdown(full_response)
 
 
         st.session_state["messages"].append({
             "role": "assistant",
-            "content": response
+            "content": full_response
         })
         

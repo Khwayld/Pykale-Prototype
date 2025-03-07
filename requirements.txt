@@ -8,6 +8,5 @@ chromadb
 langchain
 tiktoken
 langchain-community
-pysqlite3-binary
 langchain-openai
 langchain-chroma

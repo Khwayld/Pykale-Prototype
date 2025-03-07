@@ -1,4 +1,6 @@
 import sys
+import torch
+
 
 # Needed to fix enviroment errors on streamlit cloud. 
 try:
@@ -6,6 +8,9 @@ try:
     sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 except ImportError:
     pass
+
+torch.classes.__path__ = []
+
 
 import streamlit as st
 from navigation import navbar
@@ -23,6 +28,9 @@ from views.demos.domain_adaptation_demo import domain_adaptation_page
 from views.guides.introduction_guide import introduction_page
 from views.guides.kale_api_guide.kale_api_guide import kale_api_page
 from views.chatbot_page import chatbot_page
+from views.tutorials.build_first_model_page import build_first_model_page
+
+
 
 def main():    
     st.set_page_config(layout="wide")  
@@ -61,6 +69,8 @@ def main():
         interpret_page()
     elif st.session_state["page"] == "pipeline_page":
         pipeline_page()
+    elif st.session_state["page"] == "build_first_model_page":
+        build_first_model_page()
 
 
 if __name__ == "__main__":
