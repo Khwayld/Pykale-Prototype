@@ -11,4 +11,5 @@ langchain-community
 langchain-openai
 langchain-chroma
 pydicom
+pysqlite3
 scikit-image
