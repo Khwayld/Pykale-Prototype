@@ -10,3 +10,5 @@ tiktoken
 langchain-community
 langchain-openai
 langchain-chroma
+pydicom
+scikit-image
