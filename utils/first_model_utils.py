@@ -7,8 +7,7 @@ from kale.loaddata.image_access import DigitDataset
 from kale.prepdata.image_transform import get_transform
 from kale.embed.image_cnn import SmallCNNFeature
 from kale.predict.class_domain_nets import ClassNetSmallImage
-from kale.evaluate.metrics import topk_accuracy
-
+from helpers.helper import topk_accuracy
 
 
 def run_first_model_pipeline():
