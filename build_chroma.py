@@ -1,10 +1,12 @@
-# build_chroma.py
 import os
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
+from langchain_chroma import Chroma
 from dotenv import load_dotenv
 import openai
+from chromadb.config import Settings
+import chromadb
+
 
 def build_index(xml_path, persist_dir="chroma_db"):
     load_dotenv()
@@ -24,17 +26,18 @@ def build_index(xml_path, persist_dir="chroma_db"):
     chunks = text_splitter.split_text(text)
 
     # 3) Create embeddings & store in Chroma
+    chroma_client = chromadb.PersistentClient(path=persist_dir)
+
     embeddings = OpenAIEmbeddings(openai_api_key=openai.api_key)
     vectordb = Chroma.from_texts(
         texts=chunks,
         embedding=embeddings,
         metadatas=[{"source": "pykale.xml"} for _ in chunks],
         collection_name="pykale_xml",
-        persist_directory=persist_dir
+        client=chroma_client,
     )
 
-    # 4) Persist
-    vectordb.persist()
+
     print(f"Chroma DB built & persisted in: {persist_dir}")
 
 if __name__ == "__main__":

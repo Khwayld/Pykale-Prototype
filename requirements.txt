@@ -12,3 +12,4 @@ langchain-openai
 langchain-chroma
 pydicom
 scikit-image
+pysqlite3-binary
