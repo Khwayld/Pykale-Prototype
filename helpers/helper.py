@@ -1,5 +1,7 @@
 import streamlit as st
 import torch
+from helpers.constants import PAGE_MAP
+from navigation import go_to
 
 def display_frames_in_grid(frames, num_cols=3):
     """
@@ -17,7 +19,7 @@ def display_frames_in_grid(frames, num_cols=3):
                         f"<h5 style='text-align: center;'>Frame {frame_index + 1}</h5>",
                         unsafe_allow_html=True
                     )
-                    st.image(frames[frame_index], use_column_width=True)
+                    st.image(frames[frame_index])
 
 
 
@@ -64,3 +66,20 @@ def topk_accuracy(output, target, topk=(1,)):
         correct_k = torch.ge(correct[:k].float().sum(0), 1)
         result.append(correct_k)
     return result
+
+def remove_placeholders(text: str) -> str:
+    """Remove placeholders from final text so user doesn't see bracket tokens."""
+    for placeholder in PAGE_MAP.keys():
+        text = text.replace(placeholder, "")
+
+    return text
+
+
+def render_placeholder_buttons_if_needed(full_response: str):
+    """Check placeholders in the final LLM text, show corresponding buttons."""
+    for placeholder, (button_label, page_slug) in PAGE_MAP.items():
+        if placeholder in full_response:
+            st.button(
+                f"Go to {button_label}",
+                on_click=lambda p=page_slug: st.session_state.update({"page": p})
+            )

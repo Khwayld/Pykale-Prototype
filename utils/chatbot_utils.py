@@ -2,7 +2,7 @@ import streamlit as st
 from dotenv import load_dotenv
 import os
 from openai import OpenAI
-from helpers.helper import load_file
+from helpers.helper import load_file, remove_placeholders, render_placeholder_buttons_if_needed
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
 
@@ -110,3 +110,7 @@ def display_chatbot():
             "content": full_response
         })
         
+
+        final_text = remove_placeholders(full_response)
+        text_placeholder.markdown(final_text)
+        render_placeholder_buttons_if_needed(full_response)
