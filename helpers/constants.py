@@ -39,7 +39,7 @@ HUB = [
 
     {
         "name": "Build Your First PyKale Model",
-        "description": "Test.",
+        "description": "A quick-start guide on building and running your first PyKale model",
         "image": "https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
         "nav": "build_first_model_page",
         "category": "Tutorial"

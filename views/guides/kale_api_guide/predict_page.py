@@ -57,6 +57,7 @@ def predict_page():
                 - Integration into a larger prediction pipeline.
                 """
             )
+
             st.code(
                 """
                 from kale.predict.class_domain_nets import ClassNetSmallImage
@@ -67,9 +68,7 @@ def predict_page():
                 # Example usage:
                 # Assume 'embedding' is obtained from an embedding module (e.g., SmallCNNFeature)
                 output = classifier(embedding)
-                """,
-                language="python"
+                """
             )
-
 
     st.write("---")

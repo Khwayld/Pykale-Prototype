@@ -36,8 +36,8 @@ def prepdata_page():
                 The <code>kale.prepdata</code> module offers essential tools for data preprocessing. Its main functionalities include:
             </p>
             <ul style="display: inline-block; text-align: left;">
-                <li>🖼️ <strong>Image Transformations:</strong> Create transformation pipelines for tasks such as resizing, center cropping, and normalization.</li>
-                <li>🔄 <strong>Tensor Conversion:</strong> Convert lists of images into PyTorch tensors for efficient batching and processing.</li>
+                <li>🖼️ <strong>Image Transformations:</strong> Create transformation pipelines for tasks such as resizing, cropping, and normalizing images.</li>
+                <li>🔄 <strong>Tensor Conversion:</strong> Convert lists of video frames into PyTorch tensors for efficient model processing.</li>
             </ul>
         </div>
         """,
@@ -47,7 +47,7 @@ def prepdata_page():
 
     st.write("---")
 
-    # --- Expandable Sections
+    # --- Expandable Sections ---
     col1, col2, col3 = st.columns([1, 3, 1])  
 
     with col2:
@@ -71,30 +71,27 @@ def prepdata_page():
                 # - Center crop to 28 pixels,
                 # - Normalize pixel values.
                 transform = get_transform(resize=32, center_crop=28, normalize=True)
-                """,
-                language="python"
+                """
             )
 
     with col2:    
         with st.expander("🔄 Tensor Conversion"):
             st.write(
                 """
-                Converting a list of images into a PyTorch tensor is essential for batching and processing.
-                The `ImglistToTensor` function facilitates this conversion.
+                Converting a list of video frames into a PyTorch tensor is essential for batching and processing.
+                The `ImglistToTensor` function from the `kale.prepdata.video_transform` module facilitates this conversion.
                 """
             )
 
             st.code(
                 """
-                from kale.prepdata.image_transform import ImglistToTensor
+                from kale.prepdata.video_transform import ImglistToTensor
 
                 # Convert a list of image frames into a tensor.
                 tensor_converter = ImglistToTensor()
                 tensor = tensor_converter(image_list)
-                """,
-                language="python"
+                """
             )
-
 
 
     st.write("---")

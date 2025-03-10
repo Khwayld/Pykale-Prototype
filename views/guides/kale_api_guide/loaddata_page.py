@@ -36,6 +36,7 @@ def loaddata_page():
         """,
         unsafe_allow_html=True
     )
+    
     st.markdown(
         """
         <div style="text-align:center;">
@@ -64,7 +65,6 @@ def loaddata_page():
                 It handles downloading (if necessary), splitting into train/test, and providing a PyTorch DataLoader.
                 Key methods include:
                 - `get_access()`: Returns a DataLoader for the specified split.
-                - `get_digit_transform()`: Provides appropriate transformations.
                 """
             )
             st.code(
@@ -74,8 +74,7 @@ def loaddata_page():
                 # Example: Load the MNIST dataset
                 dataset = DigitDataset(dataset_name="MNIST", train=True, download=True)
                 train_loader = dataset.get_access()
-                """,
-                language="python"
+                """
             )
 
     # 2. AVMNISTDataset
@@ -97,8 +96,7 @@ def loaddata_page():
                 # Example: Initialize AVMNIST dataset
                 avmnist_data = AVMNISTDataset()
                 train_loader = avmnist_data.get_train_loader()
-                """,
-                language="python"
+                """
             )
 
     # 3. MultiDomainImageFolder
@@ -123,8 +121,7 @@ def loaddata_page():
                     target_domains=["/path/to/target"]
                 )
                 train_loader = multi_domain_data.get_train()
-                """,
-                language="python"
+                """
             )
 
     # 4. VideoFrameDataset
@@ -132,11 +129,22 @@ def loaddata_page():
         with st.expander("🎥 VideoFrameDataset (Video Loading)"):
             st.write(
                 """
-                The `VideoFrameDataset` class facilitates loading video data by extracting frames.
-                It supports setting the number of segments and frames per segment to provide flexibility in sampling.
-                This is useful for video analysis tasks.
+                The `VideoFrameDataset` class makes it easy to load video data by extracting only a few key frames from each video.
+                Instead of loading every frame, it selects a few representative frames to capture the action across the entire video.
+
+                **Parameters Explained:**
+                - `root_path`: The main folder where your video folders are stored.
+                - `annotationfile_path`: A text file listing each video sample along with the frame range and its label.
+                - `num_segments`: The video is divided into this many parts; a frame is selected from each segment.
+                - `frames_per_segment`: The number of consecutive frames to load from each segment.
+                - `imagefile_template`: The naming pattern for the video frame files (e.g., "img_00001.jpg").
+                - `transform`: An optional processing step for the images (set to None if not needed).
+                - `random_shift`: If True, the starting frame in each segment is chosen randomly; if False, it uses the middle frame.
+                - `test_mode`: If True, frames are chosen in a fixed manner for testing; if False, random selection is used.
+
                 """
             )
+            
             st.code(
                 """
                 from kale.loaddata.videos import VideoFrameDataset
@@ -152,10 +160,10 @@ def loaddata_page():
                     random_shift=True,
                     test_mode=False
                 )
+
                 sample = dataset[0]
                 frames = sample[0]
-                """,
-                language="python"
+                """
             )
 
     st.write("---")

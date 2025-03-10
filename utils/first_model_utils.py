@@ -36,7 +36,6 @@ def run_first_model_pipeline():
         # 1. Load Data
         data_path = "./datasets/digits"  # Set your desired data directory
         
-        # Use the enum value (DigitDataset.MNIST) and get_access to return a dataset access object and channel info.
         data_access, num_channels = DigitDataset.get_access(DigitDataset.MNIST, data_path)
         
         rand_idx = random.randrange(len(data_access.get_train()))
@@ -46,11 +45,9 @@ def run_first_model_pipeline():
             if isinstance(sample, torch.Tensor):
                 sample_np = sample.detach().cpu().numpy()
                 
-                # If image is grayscale with shape (1, H, W), squeeze channel dimension
                 if sample_np.ndim == 3 and sample_np.shape[0] == 1:
                     sample_np = sample_np.squeeze(0)
                 
-                # Assume the tensor is in range [0,1]; multiply by 255 and convert to uint8
                 sample = Image.fromarray((sample_np * 255).astype(np.uint8))
             else:
                 sample = Image.fromarray(sample)
@@ -78,7 +75,6 @@ def run_first_model_pipeline():
         acc_list = topk_accuracy(output, target_tensor, topk=(1,))
         accuracy = acc_list[0].item()
 
-        # Convert the preprocessed tensor to an image for display (approximate inverse normalization)
         inv_normalize = transforms.Normalize(
             mean=[-0.485/0.229, -0.456/0.224, -0.406/0.225],
             std=[1/0.229, 1/0.224, 1/0.225]

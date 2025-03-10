@@ -57,7 +57,7 @@ def kale_api_page():
             card(
                 title=module["name"],
                 text=module["desc"],
-                image="",
+                image="https://avatars.githubusercontent.com/u/63680111?s=200&v=4",
                 styles={
                     "card": {
                         "width": "100%",
@@ -82,7 +82,6 @@ def kale_api_page():
             <ul style="display: inline-block; text-align: left;">
                 <li>📖 <a href="https://pykale.readthedocs.io/" target="_blank">PyKale Documentation</a></li>
                 <li>🔬 <a href="https://github.com/pykale/pykale" target="_blank">GitHub Repository</a></li>
-                <li>📊 <a href="full_example_page" target="_self">Try a Full Example</a></li>
             </ul>
         </div>
         """,

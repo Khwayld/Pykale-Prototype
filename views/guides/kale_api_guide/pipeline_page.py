@@ -29,16 +29,16 @@ def pipeline_page():
     # --- Overview Section ---
     st.markdown(
         """
-        <div style="text-align:center;">
+        <div style="text-align: center;">
             <h3>🔹 Overview</h3>
-            <p>
-                The <code>kale.pipeline</code> module provides ready-to-use machine learning pipelines, streamlining the development process for tasks such as:
-                <ul>
+            <p>The <code>kale.pipeline</code> module provides ready-to-use machine learning pipelines, streamlining development for tasks such as:</p>
+            <div style="display: inline-block; text-align: left;">
+                <ul style="margin: 0; padding: 0;">
                     <li>🧠 Neural network training</li>
                     <li>🌐 Domain adaptation</li>
                     <li>🔗 Multimodal learning</li>
                 </ul>
-            </p>
+            </div>
         </div>
         """,
         unsafe_allow_html=True
@@ -52,13 +52,16 @@ def pipeline_page():
         with st.expander("🧠 BaseNNTrainer (Neural Network Training)"):
             st.write(
                 """
-                **`BaseNNTrainer`**: A foundational class for training neural network models, built upon PyTorch Lightning. It standardizes essential components like:
+                **`BaseNNTrainer`**: A foundational class for training neural network models, built upon PyTorch Lightning. 
+                It standardizes essential components like:
                 - Optimizer setup
                 - Learning rate scheduling
                 - Training, validation, and testing workflows
+
                 This class serves as a base for specialized trainers, ensuring consistency across various neural network training tasks.
                 """
             )
+
             st.code(
                 """
                 from kale.pipeline.base_nn_trainer import BaseNNTrainer
@@ -69,9 +72,9 @@ def pipeline_page():
                 # Example usage:
                 # Assume 'model' is a neural network model and 'data_loader' is a data loader
                 trainer.fit(model, data_loader)
-                """,
-                language="python"
+                """
             )
+        
 
         with st.expander("🌐 Domain Adaptation Trainers"):
             st.write(
@@ -82,6 +85,7 @@ def pipeline_page():
                 - **`WDGRLTrainer`**: Implements the Wasserstein Distance Guided Representation Learning (WDGRL) approach for domain adaptation.
                 """
             )
+
             st.code(
                 """
                 from kale.pipeline.domain_adapter import DANNTrainer, CDANTrainer, WDGRLTrainer
@@ -94,20 +98,24 @@ def pipeline_page():
 
                 # Initialize a WDGRL trainer
                 wdgrl_trainer = WDGRLTrainer(feature_extractor=my_feature_extractor, task_classifier=my_task_classifier)
-                """,
-                language="python"
+                """
             )
+
+
+
 
         with st.expander("🔗 Multimodal Learning with MultimodalNNTrainer"):
             st.write(
                 """
-                **`MultimodalNNTrainer`**: Facilitates training neural networks that integrate multiple data modalities. It manages:
+                **`MultimodalNNTrainer`**: Facilitates training neural networks that integrate multiple data modalities. 
+                It manages:
                 - Separate encoders for each modality
                 - Fusion techniques to combine modal representations
                 - A classifier head for final predictions
                 This trainer streamlines the process of building and training models that leverage diverse data sources.
                 """
             )
+
             st.code(
                 """
                 from kale.pipeline.base_nn_trainer import MultimodalNNTrainer
@@ -118,8 +126,7 @@ def pipeline_page():
                 # Example usage:
                 # Assume 'multimodal_data_loader' provides batches of multimodal data
                 trainer.fit(multimodal_data_loader)
-                """,
-                language="python"
+                """
             )
 
 

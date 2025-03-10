@@ -108,21 +108,3 @@ def introduction_page():
     )
 
     st.write("---")
-
-    # 5. Next Step
-    st.markdown(
-        """
-        <div style="text-align:center; max-width:800px; margin:auto;">
-            <h3>🚀 Next Steps</h3>
-            <p>Now that you understand PyKale, check out the following resources:</p>
-            <ul style="display: inline-block; text-align: left;">
-                <li>📖 <a href="https://pykale.readthedocs.io/" target="_blank">Official PyKale Documentation</a></li>
-                <li>🔬 <a href="https://github.com/pykale/pykale" target="_blank">PyKale GitHub Repository</a></li>
-                <li>📊 <a href="" target="_self">Guide 1</a></li>
-                <li>📑 <a href="" target="_self">Guide 2</a></li>
-            </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
