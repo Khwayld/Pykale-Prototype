@@ -52,22 +52,30 @@ def build_first_model_page():
             f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>Pipeline Overview</h2>",
             unsafe_allow_html=True
         )
-        st.write(
-            """
-            **What We'll Do:**
-            1. **Load a single digit image** from MNIST (the popular handwritten digit dataset).
-            2. **Preprocess** the image (resize, crop, normalize) for model input.
-            3. **Extract features** using a simple CNN provided by PyKale.
-            4. **Classify** which digit it is.
-            5. **Evaluate** how accurate the prediction is.
 
-            **Note**: The classifier here is not trained. It’s just a quick demonstration
-            of how PyKale can load data and feed it through a CNN + classifier. Hence,
-            the accuracy is usually random (0 or 1 if you’re testing a single sample).
-            
-            Check out the “How to Train the Model” section below to learn more.
-            """
+        st.markdown(
+            f"<h5 style='text-align:center;'>What we will do:</h5>",
+            unsafe_allow_html=True
         )
+
+
+        c_l, c_c, c_r = st.columns([1, 4, 0.1])
+        with c_c:
+            st.write(
+                """
+                1. **Load a single digit image** from MNIST (the popular handwritten digit dataset).
+                2. **Preprocess** the image (resize, crop, normalize) for model input.
+                3. **Extract features** using a simple CNN provided by PyKale.
+                4. **Classify** which digit it is.
+                5. **Evaluate** how accurate the prediction is.
+
+                **Note**: The classifier here is not trained. It’s just a quick demonstration
+                of how PyKale can load data and feed it through a CNN + classifier. Hence,
+                the accuracy is usually random (0 or 1 if you’re testing a single sample).
+                
+                Check out the “How to Train the Model” section below to learn more.
+                """
+            )
 
         st.markdown("---")
 
@@ -109,13 +117,16 @@ def build_first_model_page():
             unsafe_allow_html=True
         )
 
-        st.write("""
-            We normalize the pixel values and optionally resize/crop the image so it’s standard size for the model.
-            Here, we use a special PyKale transform preset called `mnist32rgb`, which:
-            - Converts MNIST's 1-channel grayscale into a 3-channel image (to match the CNN’s expectations),
-            - Resizes the image to 32×32,
-            - Normalizes using ImageNet-like statistics.
-        """)
+        col_left, col_center, col_right = st.columns([1, 4, 1])
+        with col_center:
+            st.write("""
+                We normalize the pixel values and optionally resize/crop the image so it’s standard size for the model.
+                Here, we use a special PyKale transform preset called `mnist32rgb`, 
+                which:
+                - Converts MNIST's 1-channel grayscale into a 3-channel image (to match the CNN’s expectations),
+                - Resizes the image to 32×32,
+                - Normalizes using ImageNet-like statistics.
+            """)
 
     
         with st.expander("Show Preprocessing Code"):
@@ -325,17 +336,17 @@ def build_first_model_page():
             unsafe_allow_html=True
         )
 
-        st.write(
-            """
-            That’s it! You’ve built a simple digit classifier in PyKale.
-            
-            **Where to go next?**
-            - Check the “Getting Started with PyKale” page if you need more about installation or basic usage.
-            - Dive into “The KALE API” page for deeper exploration of how the transforms, models, and other modules work.
-            - Explore “Domain Adaptation on Toy Data” or “Video Dataset Loading & Augmentation” pages for more advanced demos.
-            
-            **Feel free to experiment** with different transformations or deeper neural architectures.
-            """
+        st.markdown(
+            f"""
+            <div style="text-align: center; max-width: 700px; margin:auto;">
+                <p style="margin-top: 10px;">
+                    That’s it! You’ve built a simple digit classifier in PyKale.            
+                    <strong>Feel free to experiment</strong> with different transformations or deeper neural architectures.
+                </p>
+            </div>
+            """, 
+            unsafe_allow_html=True
         )
+
 
         st.markdown("---")

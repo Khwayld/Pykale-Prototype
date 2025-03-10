@@ -3,11 +3,11 @@ import torch
 
 
 # Needed to fix enviroment errors on streamlit cloud. 
-# try:
-#     import pysqlite3
-#     sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
-# except ImportError:
-#     pass
+try:
+    import pysqlite3
+    sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
+except ImportError:
+    pass
 
 torch.classes.__path__ = []
 
