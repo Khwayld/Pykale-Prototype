@@ -125,17 +125,22 @@ def video_demo_page():
             f"<h2 style='text-align:center; color:{PRIMARY_COLOR};'>3. Video Loading with Preprocessing Transforms</h2>",
             unsafe_allow_html=True
         )
-        st.write(
-            """
-            Preprocessing is often required before feeding video data into a deep learning model.
-            In this demo, we define a transform pipeline using torchvision's transforms to:
-              - Convert a list of PIL images into a tensor,
-              - Resize images (scaling the smaller edge to 299 pixels),
-              - Center crop them to 299x299,
-              - Normalize the pixel values with ImageNet statistics.
-            The result is a preprocessed video tensor ready for model input.
-            """
-        )
+
+
+        col_left, col_center, col_right = st.columns([0.5, 4, 0.1])
+        with col_center:
+            st.write(
+                """
+                Preprocessing is often required before feeding video data into a deep learning model.
+                In this demo, we define a transform pipeline using torchvision's transforms to:
+                - Convert a list of PIL images into a tensor,
+                - Resize images (scaling the smaller edge to 299 pixels),
+                - Center crop them to 299x299,
+                - Normalize the pixel values with ImageNet statistics.
+                The result is a preprocessed video tensor ready for model input.
+                """
+            )
+
         with st.expander("Show code"):
             st.code("""
             import torchvision.transforms as transforms

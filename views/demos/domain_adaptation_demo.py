@@ -321,20 +321,22 @@ def domain_adaptation_page():
             unsafe_allow_html=True
         )
 
-        st.write("""
-        - **Domain Shifts** happen when training data and real-world data differ.
-        - **Ridge vs. CoIRLS**: A simple classifier ignores domain differences; 
-          an adaptation method accounts for them.
-        - **Scores & Visuals**: Plots help us see how well each classifier separates classes.
-        - **Hyperparameters**: Both `alpha` and `lambda` matter—experiment to find optimal values.
-        """)
+        col_left, col_center, col_right = st.columns([1, 4, 1])
+        with col_center:
+            st.write("""
+            - **Domain Shifts** happen when training data and real-world data differ.
+            - **Ridge vs. CoIRLS**: A simple classifier ignores domain differences; 
+            an adaptation method accounts for them.
+            - **Scores & Visuals**: Plots help us see how well each classifier separates classes.
+            - **Hyperparameters**: Both `alpha` and `lambda` matter—experiment to find optimal values.
+            """)
 
-        st.write("""
-            **That’s the end of our step-by-step Domain Adaptation tutorial!** 
-            Use the sliders above to experiment. 
-            We hope this clarifies how domain adaptation techniques can help 
-            models perform better when data distributions shift in practice.
-        """)
+            st.write("""
+                **That’s the end of our step-by-step Domain Adaptation tutorial!** 
+                Use the sliders above to experiment. 
+                We hope this clarifies how domain adaptation techniques can help 
+                models perform better when data distributions shift in practice.
+            """)
 
         st.markdown("---")
 
