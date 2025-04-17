@@ -1,0 +1,1 @@
+from .models.cnn_transformer import CNNTransformerModel
