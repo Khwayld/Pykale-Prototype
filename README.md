@@ -29,6 +29,11 @@ Set your API key in a .env file:
 OPENAI_API_KEY=your_key_here
 ```
 
+Run the build_chroma.py script:
+```
+python scripts/build_chroma.py
+```
+
 Start the app:
 ```
 streamlit run main.py
